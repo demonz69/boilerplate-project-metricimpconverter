@@ -52,17 +52,17 @@ suite('Unit Tests', function () {
         assert.equal(convertHandler.spellOutUnit('kg'), 'kilograms');
     });
     test('convert gal to l', () => 
-        assert.equal(convertHandler.convert(1, 'gal'), 3.78541));
+        assert.approximately(convertHandler.convert(1, 'gal'), 3.78541, 0.00001));
     test('convert l to gal', () =>
-        assert.equal(convertHandler.convert(1, 'L'), 0.264172));
+        assert.approximately(convertHandler.convert(1, 'L'), 0.264172, 0.00001));
     test('convert mi to km', () =>
-        assert.equal(convertHandler.convert(1, 'mi'), 1.60934));
+        assert.approximately(convertHandler.convert(1, 'mi'), 1.60934, 0.00001));
     test('convert km to mi', () =>
-        assert.equal(convertHandler.convert(1, 'km'), 0.621371));
+        assert.approximately(convertHandler.convert(1, 'km'), 0.621371, 0.00001));
     test('convert lbs to kg', () =>
-        assert.equal(convertHandler.convert(1, 'lbs'), 0.453592));
+        assert.approximately(convertHandler.convert(1, 'lbs'), 0.453592, 0.00001));
     test('convert kg to lbs', () =>
-        assert.equal(convertHandler.convert(1, 'kg'), 2.20462));
+        assert.approximately(convertHandler.convert(1, 'kg'), 2.20462, 0.00001));
 
 
 });

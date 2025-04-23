@@ -16,7 +16,7 @@ function ConvertHandler() {
 
  
   this.getUnit = function (input) {
-    const result = input.match(/[a-zA-Z]+/);
+    const result = input.match(/[a-zA-Z]+$/);
     if (!result) return 'invalid unit';
 
     const unit = result[0].toLowerCase();
