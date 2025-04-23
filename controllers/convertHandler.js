@@ -14,8 +14,7 @@ function ConvertHandler() {
     }
   };
 
-
-  
+ 
   this.getUnit = function (input) {
     const result = input.match(/[a-zA-Z]+/);
     if (!result) return 'invalid unit';
