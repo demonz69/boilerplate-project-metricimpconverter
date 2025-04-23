@@ -6,14 +6,15 @@ function ConvertHandler() {
     const numStr = result[0];
     
     if (numStr.split('/').length > 2) return 'invalid number';
-    return result;
-  }
 
-  try {
-    return eval(numStr);
-  } catch (e) {
-    return 'invalid number';
-  }
+    try {
+      return eval(numStr);
+    } catch (e) {
+      return 'invalid number';
+    }
+  };
+
+
   
   this.getUnit = function (input) {
     const result = input.match(/[a-zA-Z]+/);
@@ -29,9 +30,8 @@ function ConvertHandler() {
     return unit === 'l' ? 'L' : unit;
   };
     
-  };
   
-this.getReturnUnit = function (initUnit) {
+  this.getReturnUnit = function (initUnit) {
     const units = {
       gal: 'L',
       L: 'gal',
@@ -40,12 +40,11 @@ this.getReturnUnit = function (initUnit) {
       lbs: 'kg',
       kg: 'lbs'
     };
-    const result = units[initUnit];
+    return units[initUnit];
     
-    return result;
   };
 
-this.spellOutUnit = function (unit) {
+  this.spellOutUnit = function (unit) {
     const units = {
       gal: 'gallons',
       L: 'liters',
@@ -54,15 +53,17 @@ this.spellOutUnit = function (unit) {
       lbs: 'pounds',
       kg: 'kilograms'
     };
-    const result = units[unit];
+    return units[unit];
     
   };
   
-  this.convert = function(initNum, initUnit) {
+  this.convert = function (initNum, initUnit) {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
+
     let result;
+
     switch (initUnit) {
       case 'gal':
         result = initNum * galToL;
@@ -90,10 +91,11 @@ this.spellOutUnit = function (unit) {
     
   };
   
-this.getString = function (initNum, initUnit, returnNum, returnUnit) {
+  this.getString = function (initNum, initUnit, returnNum, returnUnit) {
     return `${initNum} ${this.spellOutUnit(initUnit)} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
     
   };
+}
   
 
 module.exports = ConvertHandler;
