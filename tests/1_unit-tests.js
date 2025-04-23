@@ -51,5 +51,18 @@ suite('Unit Tests', function () {
         assert.equal(convertHandler.spellOutUnit('lbs'), 'pounds');
         assert.equal(convertHandler.spellOutUnit('kg'), 'kilograms');
     });
+    test('convert gal to l', () => 
+        assert.equal(convertHandler.convert(1, 'gal'), 3.78541));
+    test('convert l to gal', () =>
+        assert.equal(convertHandler.convert(1, 'L'), 0.264172));
+    test('convert mi to km', () =>
+        assert.equal(convertHandler.convert(1, 'mi'), 1.60934));
+    test('convert km to mi', () =>
+        assert.equal(convertHandler.convert(1, 'km'), 0.621371));
+    test('convert lbs to kg', () =>
+        assert.equal(convertHandler.convert(1, 'lbs'), 0.453592));
+    test('convert kg to lbs', () =>
+        assert.equal(convertHandler.convert(1, 'kg'), 2.20462));
+
 
 });
