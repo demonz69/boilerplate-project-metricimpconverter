@@ -1,5 +1,6 @@
 function ConvertHandler() {
 
+
   const units = ['gal', 'l', 'ml', 'km', 'lbs', 'kg'];
   const spellOut = {
     gal: 'gallons',
@@ -67,9 +68,9 @@ function ConvertHandler() {
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
     
+
     return `${initNum} ${this.spellOutUnit(initUnit)} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
   };
-  
 }
 
 module.exports = ConvertHandler;
