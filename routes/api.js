@@ -3,27 +3,40 @@
 const ConvertHandler = require('../controllers/convertHandler.js');
 
 module.exports = function (app) {
+  const convertHandler = new ConvertHandler();
 
-  app.get('/api/convert', (re1, res) => {
-    const input = req.query.input;
-    const initNum = convertHandler.getNum(input);
-    const initUnit = convertHandler.getUnit(input);
+  app.get('/api/convert', function (req, res) {
+    try {
+      const input = req.query.input;
 
-    if (initNum === 'invalid number' && initUnit === 'invalid unit') {
-      return res.send('invalid number & unit')
+      const initNum = convertHandler.getNum(input);
+      const initUnit = convertHandler.getUnit(input);
+
+      if (initNum === 'invalid number' && initUnit === 'invalid unit') {
+        return res.status(400).send('invalid number and unit');
+      }
+      if (initNum === 'invalid number') {
+        return res.status(400).send('invalid number');
+      }
+      if (initUnit === 'invalid unit') {
+        return res.status(400).send('invalid unit');
+      }
+
+      const returnUnit = convertHandler.getReturnUnit(initUnit);
+      const returnNum = convertHandler.convert(initNum, initUnit);
+      const string = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
+
+      res.status(200).json({
+        initNum,
+        initUnit,
+        returnNum,
+        returnUnit,
+        string
+      });
+
+    } catch (err) {
+      console.error('Error in /api/convert:', err.message);
+      res.status(500).send('Server Error');
     }
-    else if (initNum === 'invalid number') {
-      return res.send('invalid number');
-
-    } else if (initUnit === 'invalid unit') {
-      return res.send('invalid unit')
-    }
-  
-    const returnNum = convertHandler.convert(initNum, initUnit);
-    const returnUnit = convertHandler.getReturnUnit(initUnit);
-    const string = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
-
-    res.json({ initNum, initUnit, returnNum, returnUnit, string });
-
   });
 };
