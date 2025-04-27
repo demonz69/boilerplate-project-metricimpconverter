@@ -24,8 +24,8 @@ suite('Functional Tests', () => {
      .get('/api/convert')
      .query({ input: '32g' })
       .end(function (err, res) {
-        assert.equal(res.status,200);
-        assert.equal(res.text, 'invalid unit');
+        assert.equal(res.status, 200);
+        assert.deepEqual(res.body, { status: 'invalid unit' });
         done();
       });
   });
