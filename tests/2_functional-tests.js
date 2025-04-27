@@ -21,22 +21,22 @@ suite('Functional Tests', () => {
 
   test('Invalid input unit', done => {
     chai.request(server)
-      .get('/api/convert')
-      .query({ input: '32g' })
-      .end((err, res) => {
-        assert.equal(res.status, 400);
-        assert.deepEqual(res.body, [{ status: 'invalid unit' }]);
+     .get('/api/convert')
+     .query({ input: '32g' })
+      .end(function (err, res) {
+        assert.equal(res.status, 400); // Expect 400 status
+        assert.deepEqual(res.body, [{ status: 'invalid unit' }]); // Expect error in an array
         done();
       });
   });
 
   test('Invalid number format', done => {
     chai.request(server)
-      .get('/api/convert')
+     .get('/api/convert')
       .query({ input: '3/7.2/4kg' })
-      .end((err, res) => {
-        assert.equal(res.status, 400);
-        assert.deepEqual(res.body, [{ status: 'invalid number' }]);
+      .end(function (err, res) {
+        assert.equal(res.status, 400); // Expect 400 status
+        assert.deepEqual(res.body, [{ status: 'invalid number' }]); // Expect error in an array
         done();
       });
   });
@@ -45,18 +45,18 @@ suite('Functional Tests', () => {
     chai.request(server)
       .get('/api/convert')
       .query({ input: '3/7.2/4kilomegagram' })
-      .end((err, res) => {
-        assert.equal(res.status, 400);
-        assert.deepEqual(res.body, [{ status: 'invalid number and unit' }]);
+      .end(function (err, res) {
+        assert.equal(res.status, 400); // Expect 400 status
+        assert.deepEqual(res.body, [{ status: 'invalid number and unit' }]); // Expect error in an array
         done();
       });
   });
 
   test('No number provided (e.g., kg)', done => {
     chai.request(server)
-      .get('/api/convert')
+       .get('/api/convert')
       .query({ input: 'kg' })
-      .end((err, res) => {
+      .end(function (err, res) {
         assert.equal(res.status, 200);
         assert.equal(res.body.initNum, 1);
         assert.equal(res.body.initUnit, 'kg');
