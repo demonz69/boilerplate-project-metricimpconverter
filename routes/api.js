@@ -13,13 +13,13 @@ module.exports = function (app) {
       const initUnit = convertHandler.getUnit(input);
 
       if (initNum === 'invalid number' && initUnit === 'invalid unit') {
-        return res.status(200).send('invalid number and unit');
+        return res.status(400).json([{ status: 'invalid number and unit' }]);
       }
       if (initNum === 'invalid number') {
-        return res.status(200).send('invalid number');
+        return res.status(400).json([{ status: 'invalid number' }]);
       }
       if (initUnit === 'invalid unit') {
-        return res.status(200).send('invalid unit');
+        return res.status(400).json([{ status: 'invalid unit' }]);
       }
 
       const returnUnit = convertHandler.getReturnUnit(initUnit);
@@ -36,7 +36,7 @@ module.exports = function (app) {
 
     } catch (err) {
       console.error('Error in /api/convert:', err.message);
-      res.status(500).send('Server Error');
+      res.status(500).json([{ status: 'unavailable' }]);
     }
   });
 };
