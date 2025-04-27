@@ -24,8 +24,8 @@ suite('Functional Tests', () => {
      .get('/api/convert')
      .query({ input: '32g' })
       .end(function (err, res) {
-        assert.equal(res.status,200);
-        assert.deepEqual(res.body, [{ status: 'invalid unit' }]);
+        assert.equal(res.status, 400); // Expect 400 status
+        assert.deepEqual(res.body, [{ status: 'invalid unit' }]); // Expect error in an array
         done();
       });
   });
@@ -35,19 +35,19 @@ suite('Functional Tests', () => {
      .get('/api/convert')
       .query({ input: '3/7.2/4kg' })
       .end(function (err, res) {
-        assert.equal(res.status, 200);
-        assert.equal(res.text, 'invalid number');
+        assert.equal(res.status, 400); // Expect 400 status
+        assert.deepEqual(res.body, [{ status: 'invalid number' }]); // Expect error in an array
         done();
       });
   });
 
   test('Invalid number and unit', done => {
     chai.request(server)
- .get('/api/convert')
+      .get('/api/convert')
       .query({ input: '3/7.2/4kilomegagram' })
       .end(function (err, res) {
-        assert.equal(res.status, 200);
-        assert.equal(res.text, 'invalid number and unit');
+        assert.equal(res.status, 400); // Expect 400 status
+        assert.deepEqual(res.body, [{ status: 'invalid number and unit' }]); // Expect error in an array
         done();
       });
   });
