@@ -22,7 +22,7 @@ suite('Functional Tests', () => {
   test('Invalid input unit', done => {
     chai.request(server)
      .get('/api/convert')
-     .query({ input: '32g' })
+     .query([{ input: '32g' }])
       .end(function (err, res) {
         assert.equal(res.status, 400); // Expect 400 status
         assert.deepEqual(res.body, [{ status: 'invalid unit' }]); // Expect error in an array
@@ -33,7 +33,7 @@ suite('Functional Tests', () => {
   test('Invalid number format', done => {
     chai.request(server)
      .get('/api/convert')
-      .query({ input: '3/7.2/4kg' })
+      .query([{ input: '3/7.2/4kg' }])
       .end(function (err, res) {
         assert.equal(res.status, 400); // Expect 400 status
         assert.deepEqual(res.body, [{ status: 'invalid number' }]); // Expect error in an array
@@ -55,7 +55,7 @@ suite('Functional Tests', () => {
   test('No number provided (e.g., kg)', done => {
     chai.request(server)
        .get('/api/convert')
-      .query({ input: 'kg' })
+      .query([{ input: 'kg' }])
       .end(function (err, res) {
         assert.equal(res.status, 200);
         assert.equal(res.body.initNum, 1);
