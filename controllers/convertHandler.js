@@ -1,29 +1,38 @@
 function ConvertHandler() {
-  this.getNum = function(input) {
+  this.getNum = function (input) {
+    if (!input) return 'invalid number'; // Prevents undefined crash
+
     const match = input.match(/^[\d.\/]+/);
-    if (!match) return 1;
+    if (!match) return 1; // Default to 1 if no number
 
     const numStr = match[0];
+
+    // Handle invalid double fractions like "3/4/2"
     if ((numStr.match(/\//g) || []).length > 1) return 'invalid number';
 
     try {
-      return eval(numStr);
+      const num = eval(numStr);
+      if (isNaN(num)) return 'invalid number';
+      return num;
     } catch (e) {
       return 'invalid number';
     }
   };
 
-  this.getUnit = function(input) {
+  this.getUnit = function (input) {
+    if (!input) return 'invalid unit'; // Prevents undefined crash
+
     const match = input.match(/[a-zA-Z]+$/);
     if (!match) return 'invalid unit';
 
     const unit = match[0].toLowerCase();
     const validUnits = ['gal', 'l', 'mi', 'km', 'lbs', 'kg'];
     if (!validUnits.includes(unit)) return 'invalid unit';
+
     return unit === 'l' ? 'L' : unit;
   };
 
-  this.getReturnUnit = function(initUnit) {
+  this.getReturnUnit = function (initUnit) {
     const map = {
       gal: 'L',
       L: 'gal',
@@ -35,7 +44,7 @@ function ConvertHandler() {
     return map[initUnit];
   };
 
-  this.spellOutUnit = function(unit) {
+  this.spellOutUnit = function (unit) {
     const map = {
       gal: 'gallons',
       L: 'liters',
@@ -47,7 +56,7 @@ function ConvertHandler() {
     return map[unit];
   };
 
-  this.convert = function(initNum, initUnit) {
+  this.convert = function (initNum, initUnit) {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
@@ -62,10 +71,11 @@ function ConvertHandler() {
       case 'km': result = initNum / miToKm; break;
       default: return null;
     }
+
     return parseFloat(result.toFixed(5));
   };
 
-  this.getString = function(initNum, initUnit, returnNum, returnUnit) {
+  this.getString = function (initNum, initUnit, returnNum, returnUnit) {
     return `${initNum} ${this.spellOutUnit(initUnit)} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
   };
 }
